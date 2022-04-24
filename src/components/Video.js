@@ -38,8 +38,6 @@ function Video({ videos }) {
   };
 
   const addComment = () => {
-    data.videos[0].comments.push("strfrnf");
-    console.log("clicked");
     setComments([...comments, comment]);
     setComment("");
   };
@@ -57,8 +55,8 @@ function Video({ videos }) {
           <Title level={4}>{selectedVideo.title}</Title>
 
           <TextArea
-           placeholder="leave your comment"
-           value={comment}
+            placeholder="leave your comment"
+            value={comment}
             onChange={(event) => {
               setComment(event.target.value);
               console.log(comment);

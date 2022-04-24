@@ -66,6 +66,12 @@
 .item {
   border: solid gray;
   margin: 10px;
+  height: 359px;
+  width: min-content;
+}
+.item a{
+  text-decoration: none;
+  color: black;
 }
 
 .sider {

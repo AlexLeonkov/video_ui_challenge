@@ -6,13 +6,13 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 
 import { Container } from "react-bootstrap";
 
 import { auth } from "../../firebase-config";
 
-function Login() {
+function Login(props) {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 

@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header style={{ backgroundColor: "Black" }}>
+        <Header style={{ backgroundColor: "Black", marginBottom: 5 }}>
           <Link to="/">
             <Text
               className="home"
