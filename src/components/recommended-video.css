@@ -1,0 +1,23 @@
+.video-list {
+    padding: 10px;
+}
+
+.video-item {
+    text-align: left;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 10px;
+}
+
+.video-item a {
+    color: #000;
+    text-decoration: none;
+}
+
+.video-item img {
+    width: 100%;
+}
+
+.video-item p {
+    width: 100%;
+    line-height: 18px;
+}

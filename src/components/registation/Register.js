@@ -1,50 +1,28 @@
 import { Form, Button, Card } from "react-bootstrap";
-import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { useAuth } from "../../context/auth-context";
 
-import { auth } from "../../firebase-config";
 
 function Register(props) {
+  const { signup} = useAuth();
+  const history = useNavigate();
+
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
 
-  const [user, setUser] = useState({});
-
-  props.func(user?.email);
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-    });
-  }, []);
-
   const register = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(
-        auth,
-        registerEmail,
-        registerPassword
-      );
-      console.log(user);
+      await signup(registerEmail, registerPassword);
+      history('/');
     } catch (error) {
-      console.log(error.message);
+      // TODO
     }
-  };
+  }
 
-  const logout = async () => {
-    await signOut(auth);
-    setUser(null);
-  };
   return (
     <>
       <Container
@@ -86,13 +64,12 @@ function Register(props) {
                 </Button>
               </Link>
             </Form>
+            <div className="w-100 text-center mt-2">
+              Already have an account? <Link to="/login">Log In</Link>
+            </div>
           </Card.Body>
         </Card>
-        <div className="w-100 text-center mt-2">
-          Already have an account? <Link to="/login">Log In</Link>
-        </div>
-
-        <Button onClick={logout}>Log Out</Button>
+       
       </Container>
     </>
   );

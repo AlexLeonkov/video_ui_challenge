@@ -1,48 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
-
 import { Container } from "react-bootstrap";
+import { useAuth } from "../../context/auth-context";
 
-import { auth } from "../../firebase-config";
+function Login() {
+  const { signin} = useAuth();
+  const history = useNavigate();
 
-function Login(props) {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
-      setUser(currentUser);
-      console.log(user);
-    });
-  }, []);
-
-  const login = async () => {
+  const login = async (e) => {
+    e.preventDefault()
     try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
-      console.log(user);
+      await signin(loginEmail, loginPassword);
+      history('/');
     } catch (error) {
-      console.log(error.message);
+      // TODO
     }
-  };
-
-  const logout = async () => {
-    await signOut(auth);
-    console.log("logged out");
-  };
+  }
 
   return (
     <>
@@ -69,7 +46,7 @@ function Login(props) {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   onChange={(event) => {
-                    setLoginEmail(event.target.value);
+                    setLoginPassword(event.target.value);
                   }}
                   type="password"
                   required
@@ -79,11 +56,12 @@ function Login(props) {
                 Log In
               </Button>
             </Form>
+            <div className="w-100 text-center mt-2">
+              Need an account? <Link to="/register">Sign Up</Link>
+            </div>
           </Card.Body>
         </Card>
-        <div className="w-100 text-center mt-2">
-          Need an account? <Link to="/register">Sign Up</Link>
-        </div>
+       
       </Container>
     </>
   );
