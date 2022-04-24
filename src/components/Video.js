@@ -1,20 +1,16 @@
 import React from "react";
 import "antd/dist/antd.css";
-import { Comment, Avatar, Input, Button } from "antd";
+import { Avatar, Input, Button } from "antd";
 import YouTube, { YouTubeProps } from "react-youtube";
-import data from "../data.json";
+
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Typography } from "antd";
-import { Layout } from "antd";
+
 import RecommendedVideo from "./RecommendedVideo";
 
-import './video.css'
-import { useAuth } from "../context/auth-context";
+import "./video.css";
 
 const { TextArea } = Input;
-const { Header, Footer, Sider, Content } = Layout;
-const { Title } = Typography;
 
 function Video({ videos }) {
   let videoName = useParams();
@@ -66,13 +62,13 @@ function Video({ videos }) {
           rows={3}
         />
 
-        <Button onClick={addComment} style={{marginTop: 10}} type="default">
+        <Button onClick={addComment} style={{ marginTop: 10 }} type="default">
           Publish comment
         </Button>
 
         <div className="toggle-comments">
           <Button
-            style={{ marginTop: 5, color: '#000'}}
+            style={{ marginTop: 5, color: "#000" }}
             onClick={() => {
               setIsOpended(!isOpened);
             }}
@@ -82,26 +78,26 @@ function Video({ videos }) {
           </Button>
         </div>
 
-          {isOpened && (
-            <div className="comment">
-              <div className="comment-list">
-                {comments.map((comment) => (
-                  <div className="comment-item">
-                    <div>
+        {isOpened && (
+          <div className="comment">
+            <div className="comment-list">
+              {comments.map((comment) => (
+                <div className="comment-item">
+                  <div>
                     <Avatar
-                        src="https://joeschmoe.io/api/v1/random"
-                        alt="Han Solo"
-                      />
-                    </div>
-                    <div>
-                      <strong>{comment?.owner || 'Han Solo' }</strong>
-                      <p>{comment}</p>
-                    </div>
+                      src="https://joeschmoe.io/api/v1/random"
+                      alt="Han Solo"
+                    />
                   </div>
-                ))}
-              </div>
+                  <div>
+                    <strong>{comment?.owner || "Han Solo"}</strong>
+                    <p>{comment}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
+          </div>
+        )}
       </div>
       <div className="sidebar">
         <RecommendedVideo />
