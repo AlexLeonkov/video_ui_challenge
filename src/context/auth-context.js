@@ -17,7 +17,7 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-console.log(firebaseConfig);
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -33,7 +33,7 @@ export const useAuth = () => {
   return useContext(authContext);
 };
 
-function useProvideAuth() {
+function useProvideAuth() { //custom hook
   const [user, setUser] = useState(null);
 
   const signin = async (email, password) => {
@@ -61,7 +61,7 @@ function useProvideAuth() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   return {
     user,

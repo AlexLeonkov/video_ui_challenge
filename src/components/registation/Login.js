@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button, Card } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { useAuth } from "../../context/auth-context";
 
 function Login() {
-  const { signin} = useAuth();
+  const { signin } = useAuth();
   const history = useNavigate();
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   const login = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await signin(loginEmail, loginPassword);
-      history('/');
+      history("/");
     } catch (error) {
       // TODO
     }
-  }
+  };
+
+  
 
   return (
     <>
@@ -61,7 +63,6 @@ function Login() {
             </div>
           </Card.Body>
         </Card>
-       
       </Container>
     </>
   );

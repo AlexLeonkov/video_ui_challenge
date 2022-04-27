@@ -6,7 +6,7 @@ function Overview() {
   return (
     <div className="items">
       {data.videos.map((video) => (
-        <div className="item">
+        <div key={video.id} className="item">
           <Link to={"/video/" + video.id}>
             <img
               alt={video.title}
