@@ -2,8 +2,8 @@ import React from "react";
 import "antd/dist/antd.css";
 import { Avatar, Input, Button } from "antd";
 import YouTube, { YouTubeProps } from "react-youtube";
-
-import { useState } from "react";
+import { useAuth } from "../context/auth-context";
+import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import RecommendedVideo from "./RecommendedVideo";
@@ -15,7 +15,32 @@ const { TextArea } = Input;
 function Video({ videos }) {
   let videoName = useParams();
   let selectedVideo = videos.find((video) => video.id === videoName.id);
+  const { user, setUser } = useAuth();
+  // let selectedVideoEdit = useMemo(() => {
+  //   return videos.find((video) => video.id === videoName.id);
+  // }, [videoName.id]);
 
+  const getTheDate = () => {
+    let today = new Date();
+
+    let date =
+      today.getFullYear() +
+      "/" +
+      (today.getMonth() + 1) +
+      "/" +
+      today.getDate();
+
+    let minutes = today.getMinutes();
+
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
+    let time = today.getHours() + ":" + minutes;
+
+    let dateTime = date + " " + time;
+    return dateTime;
+  };
   const [isOpened, setIsOpended] = useState(true);
   const [comments, setComments] = useState(selectedVideo.comments);
   const [comment, setComment] = useState("");
@@ -85,13 +110,21 @@ function Video({ videos }) {
                 <div className="comment-item">
                   <div>
                     <Avatar
-                      src="https://joeschmoe.io/api/v1/random"
+                      src={
+                        comment.image ||
+                        `https://joeschmoe.io/api/v1/${Math.floor(
+                          Math.random() * 100
+                        )}`
+                      }
                       alt="Han Solo"
                     />
                   </div>
                   <div>
-                    <strong>{comment?.owner || "Han Solo"}</strong>
-                    <p>{comment}</p>
+                    <strong>{comment.name || user.email}</strong>
+                    <p className="comment-date">
+                      {comment.date || getTheDate()}
+                    </p>
+                    <p>{comment.text || comment}</p>
                   </div>
                 </div>
               ))}
